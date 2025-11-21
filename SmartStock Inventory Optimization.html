@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)file:///C:/Users/kuchi/OneDrive/Desktop/Untitled-1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartStock Inventory Optimization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #444;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .card {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #eef;
+        }
+        .low-stock {
+            color: #d9534f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SmartStock Inventory Dashboard</h1>
+
+        <div class="grid">
+            <!-- Current Inventory -->
+            <div class="card">
+                <h2>Current Inventory</h2>
+                
+                        {% for item in inventory %}
+                        
+                        {% endfor %}
+                    <table>
+                    <thead>
+                        <tr>
+                            <th>Item ID</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Reorder Level</th>
+                        </tr>
+                    </thead>
+                    <tbody><tr>
+                            <td>{{ item.item_id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td class="{% if item.quantity &lt;= item.reorder_level %}low-stock{% endif %}">
+                                {{ item.quantity }}
+                            </td>
+                            <td>{{ item.reorder_level }}</td>
+                        </tr></tbody>
+                </table>
+            </div>
+
+            <!-- Low Stock Alerts -->
+            <div class="card">
+                <h2>Low Stock Alerts</h2>
+                {% if low_stock %}
+                    <ul>
+                        {% for item in low_stock %}
+                        <li class="low-stock">⚠️ {{ item.name }} is low on stock ({{ item.quantity }} left)</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>All inventory levels are stable.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Forecast & Optimization -->
+        <div class="grid" style="margin-top: 20px;">
+            <div class="card">
+                <h2>Demand Forecast (Next 7 Days)</h2>
+                <ul>
+                    {% for forecast in forecasts %}
+                    <li>Day {{ forloop.counter }}: Expected {{ forecast }} units</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Inventory Optimization Plan</h2>
+                {% if reorder_plan %}
+                    <ul>
+                        {% for name, qty in reorder_plan.items %}
+                        <li>{{ name }} → Reorder {{ qty }} units</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No reorders needed at this moment.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+</body></html>
