@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Inventory Optimization</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+/* LOGIN PAGE */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    width: 320px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background: #1f3c88;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-box button:hover {
+    background: #162f6b;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+/* DASHBOARD */
+#dashboard {
+    display: none;
+}
+
+header {
+    background: #1f3c88;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.logout {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #e9efff;
+}
+
+.low {
+    color: red;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.alert {
+    background: #ffecec;
+    padding: 10px;
+    border-left: 5px solid red;
+    margin-bottom: 10px;
+}
+
+footer {
+    background: #1f3c88;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div class="login-container" id="loginPage">
+    <div class="login-box">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p class="error" id="error"></p>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+<header>
+    <h1>Smart Inventory Optimization</h1>
+    <p>Retail Store Dashboard</p>
+    <button class="logout" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Current Inventory</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Product</th>
+                <th>Stock</th>
+                <th>Reorder Level</th>
+            </tr>
+            <tr>
+                <td>101</td>
+                <td>Rice Bag (25kg)</td>
+                <td class="low">8</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td>Sugar (1kg)</td>
+                <td>55</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td>Milk (500ml)</td>
+                <td class="low">12</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <td>104</td>
+                <td>Bread</td>
+                <td>30</td>
+                <td>10</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h2>Low Stock Alerts</h2>
+            <div class="alert">⚠ Rice Bag is low (8 left)</div>
+            <div class="alert">⚠ Milk is low (12 left)</div>
+        </div>
+
+        <div class="card">
+            <h2>Demand Forecast (7 Days)</h2>
+            <ul>
+                <li>Day 1: 22 units</li>
+                <li>Day 2: 18 units</li>
+                <li>Day 3: 25 units</li>
+                <li>Day 4: 20 units</li>
+                <li>Day 5: 27 units</li>
+                <li>Day 6: 30 units</li>
+                <li>Day 7: 28 units</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <h2>Inventory Optimization Plan</h2>
+        <ul>
+            <li>✔ Reorder 12 Rice Bags</li>
+            <li>✔ Reorder 20 Milk Packs</li>
+            <li>✔ No action for Sugar & Bread</li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    © 2025 Smart Inventory Optimization System
+</footer>
+
+</div>
+
+<script>
+function login() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+
+    if (user === "admin" && pass === "admin123") {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+    } else {
+        document.getElementById("error").innerText = "Invalid username or password";
+    }
+}
+
+function logout() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginPage").style.display = "flex";
+}
+</script>
+
+</body>
+</html>
